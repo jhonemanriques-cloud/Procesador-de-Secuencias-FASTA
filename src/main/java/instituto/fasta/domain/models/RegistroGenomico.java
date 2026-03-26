@@ -1,7 +1,7 @@
 package instituto.fasta.domain.models;
 
 public class RegistroGenomico {
-    private Integer id; // Puede ser null antes de guardarse
+    private Integer id;
     private String documento;
     private String nombre;
     private String apellido;

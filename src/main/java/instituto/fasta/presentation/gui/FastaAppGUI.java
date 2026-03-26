@@ -13,13 +13,13 @@ public class FastaAppGUI extends JFrame {
 
     private final ProcesadorFastaService service;
 
-    // Componentes de la UI solicitados en el reto
+
     private JLabel lblPaciente;
     private JLabel lblDocumento;
     private JLabel lblIdRegistro;
     private JButton btnCargarArchivo;
 
-    // Inyectamos el servicio de la capa de Aplicación
+
     public FastaAppGUI(ProcesadorFastaService service) {
         this.service = service;
         configurarVentana();
@@ -37,15 +37,15 @@ public class FastaAppGUI extends JFrame {
     private void inicializarComponentes() {
         btnCargarArchivo = new JButton("Cargar Archivo FASTA");
 
-        // Inicializamos los JLabel en blanco o con un texto por defecto
+
         lblPaciente = new JLabel("Paciente: ", SwingConstants.CENTER);
         lblDocumento = new JLabel("Documento: ", SwingConstants.CENTER);
         lblIdRegistro = new JLabel("ID de Registro: ", SwingConstants.CENTER);
 
-        // Agregamos la acción al botón
+
         btnCargarArchivo.addActionListener(e -> procesarArchivo());
 
-        // Añadimos los componentes a la ventana
+
         add(btnCargarArchivo);
         add(lblPaciente);
         add(lblDocumento);
@@ -54,7 +54,7 @@ public class FastaAppGUI extends JFrame {
 
     private void procesarArchivo() {
         JFileChooser fileChooser = new JFileChooser();
-        // Filtro estricto para archivos .fasta
+
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos FASTA (*.fasta)", "fasta");
         fileChooser.setFileFilter(filter);
 
@@ -63,13 +63,13 @@ public class FastaAppGUI extends JFrame {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File archivoSeleccionado = fileChooser.getSelectedFile();
             try {
-                // Leemos el contenido físico del archivo
+
                 String contenido = new String(Files.readAllBytes(archivoSeleccionado.toPath()));
 
-                // Llamamos a nuestro servicio (Capa de Aplicación)
+
                 RegistroGenomico resultado = service.procesarContenidoFasta(contenido);
 
-                // Actualizamos las etiquetas con los datos extraídos [cite: 19]
+
                 lblPaciente.setText("Paciente: " + resultado.getNombre() + " " + resultado.getApellido());
                 lblDocumento.setText("Documento: " + resultado.getDocumento());
                 lblIdRegistro.setText("ID de Registro: " + resultado.getId());
@@ -77,7 +77,7 @@ public class FastaAppGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Archivo procesado y guardado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception ex) {
-                // Manejo de errores (formato inválido, error de base de datos, etc.)
+
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error de Procesamiento", JOptionPane.ERROR_MESSAGE);
                 limpiarEtiquetas();
             }
